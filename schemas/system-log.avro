@@ -1,0 +1,72 @@
+{
+  "type": "record",
+  "name": "SystemLog",
+  "namespace": "com.aws.confluent.logs",
+  "doc": "Esquema para logs del sistema",
+  "fields": [
+    {
+      "name": "timestamp",
+      "type": "string",
+      "doc": "Timestamp del log en formato ISO 8601"
+    },
+    {
+      "name": "level",
+      "type": {
+        "type": "enum",
+        "name": "LogLevel",
+        "symbols": ["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]
+      },
+      "doc": "Nivel del log"
+    },
+    {
+      "name": "service",
+      "type": "string",
+      "doc": "Nombre del servicio que genera el log"
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "doc": "Mensaje del log"
+    },
+    {
+      "name": "metadata",
+      "type": {
+        "type": "record",
+        "name": "LogMetadata",
+        "fields": [
+          {
+            "name": "thread_id",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "ID del hilo de ejecución"
+          },
+          {
+            "name": "class_name",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Nombre de la clase"
+          },
+          {
+            "name": "method_name",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Nombre del método"
+          },
+          {
+            "name": "line_number",
+            "type": ["null", "int"],
+            "default": null,
+            "doc": "Número de línea"
+          },
+          {
+            "name": "stack_trace",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Stack trace en caso de error"
+          }
+        ]
+      },
+      "doc": "Metadatos adicionales del log"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "type": "record",
+  "name": "UserEvent",
+  "namespace": "com.aws.confluent.events",
+  "doc": "Esquema para eventos de usuario",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": "string",
+      "doc": "Identificador único del usuario"
+    },
+    {
+      "name": "event_type",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["login", "logout", "purchase", "view", "click", "registration"]
+      },
+      "doc": "Tipo de evento"
+    },
+    {
+      "name": "timestamp",
+      "type": "string",
+      "doc": "Timestamp del evento en formato ISO 8601"
+    },
+    {
+      "name": "data",
+      "type": {
+        "type": "record",
+        "name": "EventData",
+        "fields": [
+          {
+            "name": "ip",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Dirección IP del usuario"
+          },
+          {
+            "name": "device",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Tipo de dispositivo (mobile, desktop, tablet)"
+          },
+          {
+            "name": "browser",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Navegador utilizado"
+          },
+          {
+            "name": "location",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "Ubicación del usuario"
+          },
+          {
+            "name": "session_id",
+            "type": ["null", "string"],
+            "default": null,
+            "doc": "ID de la sesión"
+          }
+        ]
+      },
+      "doc": "Datos adicionales del evento"
+    }
+  ]
+}
