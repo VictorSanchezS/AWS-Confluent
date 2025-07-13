@@ -28,6 +28,7 @@ class TestRunner:
         self.producer = None
         self.aws_integration = None
         self.test_results = []
+        self.topic_name = os.getenv("KAFKA_TOPIC", "demo-topic")
     
     def setup(self):
         """Configura los componentes para las pruebas"""
@@ -35,7 +36,7 @@ class TestRunner:
         
         try:
             # Inicializar producer
-            self.producer = ConfluentProducer()
+            self.producer = ConfluentProducer(self.topic_name)
             print("✅ Producer de Confluent inicializado")
             
             # Inicializar AWS
@@ -60,7 +61,7 @@ class TestRunner:
                 "timestamp": datetime.now().isoformat()
             }
             
-            success = self.producer.send_message("user-events", test_message, "test-key")
+            success = self.producer.send_message(self.topic_name, test_message, "test-key")
             
             if success:
                 print("✅ Conexión a Confluent Cloud exitosa")
@@ -215,7 +216,7 @@ class TestRunner:
                     "timestamp": datetime.now().isoformat()
                 }
                 
-                self.producer.send_message("user-events", test_message, f"perf-test-{i}")
+                self.producer.send_message(self.topic_name, test_message, f"perf-test-{i}")
                 
                 if i % 5 == 0:
                     print(f"   Enviados {i+1}/{message_count} mensajes...")
@@ -284,6 +285,12 @@ class TestRunner:
         """Ejecuta todas las pruebas"""
         print("🚀 INICIANDO PRUEBAS DE INTEGRACIÓN AWS-CONFLUENT")
         print("="*60)
+        print("🔎 Estado actual de variables AWS:")
+        print(f"   AWS_ACCESS_KEY_ID: {os.getenv('AWS_ACCESS_KEY_ID')}")
+        print(f"   AWS_SECRET_ACCESS_KEY: {os.getenv('AWS_SECRET_ACCESS_KEY')}")
+        print(f"   AWS_REGION: {os.getenv('AWS_REGION')}")
+        print(f"   AWS_S3_BUCKET: {os.getenv('AWS_S3_BUCKET')}")
+        print(f"   AWS_CLOUDWATCH_LOG_GROUP: {os.getenv('AWS_CLOUDWATCH_LOG_GROUP')}")
         
         if not self.setup():
             print("❌ Fallo en la configuración inicial. Abortando pruebas.")

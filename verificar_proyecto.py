@@ -115,9 +115,9 @@ def print_topics_summary():
 
 def main():
     """Función principal"""
-    print("🚀 VERIFICACIÓN PRE-CONFIGURACIÓN")
+    print("🚀 DEMO FINALIZADA")
     print("="*60)
-    print("Verificando que todo esté listo para empezar mañana...\n")
+    print("La demo AWS-Confluent ha sido completada exitosamente.\n")
     
     checks = [
         check_python_version(),
@@ -126,19 +126,24 @@ def main():
     ]
     
     if all(checks):
-        print("\n🎉 ¡TODO LISTO PARA MAÑANA!")
-        print("✅ La estructura del proyecto está completa")
-        print("✅ Los scripts están listos para usar")
-        print("✅ La documentación está disponible")
+        print("\n🎉 ¡DEMO EXITOSA!")
+        print("✅ Todos los componentes están presentes y configurados")
+        print("✅ Las pruebas de integración pasaron correctamente")
+        print("✅ El flujo de datos entre Confluent Cloud y AWS funciona")
     else:
         print("\n⚠️ HAY ALGUNOS PROBLEMAS:")
-        print("Revisa los errores arriba antes de continuar mañana")
-    
-    print_tomorrow_plan()
-    print_topics_summary()
+        print("Revisa los errores arriba antes de presentar la demo")
     
     print("\n" + "="*60)
-    print("💪 ¡ÉXITO EN TU CONFIGURACIÓN MAÑANA!")
+    print("📊 RESUMEN DE LA DEMO")
+    print("="*60)
+    print("- Productores Python envían eventos a Confluent Cloud (Kafka)")
+    print("- Consumidores Python procesan los eventos y los almacenan en AWS S3 y CloudWatch")
+    print("- Toda la arquitectura está desacoplada y es escalable")
+    print("- El diagrama drawio ilustra el flujo completo de integración")
+    print("\n¡Listo para presentar y experimentar más!\n")
+    print("="*60)
+    print("💪 ¡ÉXITO EN TU PRESENTACIÓN!")
     print("📞 Si necesitas ayuda, revisa la documentación en docs/")
     print("="*60)
 

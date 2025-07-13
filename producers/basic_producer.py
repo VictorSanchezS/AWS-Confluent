@@ -18,10 +18,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ConfluentProducer:
-    def __init__(self):
+    def __init__(self, topic_name=None):
         self.bootstrap_servers = os.getenv('CONFLUENT_BOOTSTRAP_SERVERS')
         self.api_key = os.getenv('CONFLUENT_API_KEY')
         self.api_secret = os.getenv('CONFLUENT_API_SECRET')
+        self.topic_name = topic_name or os.getenv('KAFKA_TOPIC', 'demo-topic')
         
         if not all([self.bootstrap_servers, self.api_key, self.api_secret]):
             raise ValueError("Faltan credenciales de Confluent Cloud en .env")
@@ -80,8 +81,7 @@ class ConfluentProducer:
             'data': data
         }
         
-        topic = os.getenv('TOPIC_USER_EVENTS', 'user-events')
-        return self.send_message(topic, message, key=user_id)
+        return self.send_message(self.topic_name, message, key=user_id)
     
     def send_system_log(self, level: str, message: str, service: str):
         """
@@ -98,8 +98,7 @@ class ConfluentProducer:
             'service': service
         }
         
-        topic = os.getenv('TOPIC_SYSTEM_LOGS', 'system-logs')
-        return self.send_message(topic, log_message, key=service)
+        return self.send_message(self.topic_name, log_message, key=service)
     
     def close(self):
         """Cierra el producer"""
